@@ -1,9 +1,10 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/shared/Logo";
 import useAuth from "@/hooks/useAuth";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -49,6 +50,14 @@ export default function LoginPage() {
     await login({ email: form.email, password: form.password });
   };
 
+  // Show toast for API error (invalid email/password, etc.)
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setForm({...form, password: ""});
+    }
+  }, [error]);
+
   return (
     <div>
       <div className="w-full flex flex-col justify-center items-center">
@@ -91,8 +100,7 @@ export default function LoginPage() {
           )}
         </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-
+        
         <button
           type="submit"
           disabled={loading}

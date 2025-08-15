@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getProfile, loginUser, logoutUser } from "@/services/authService";
 import type { User, LoginPayload } from "@/types/auth";
+import Cookies from "js-cookie";
 
 interface AuthState {
   user: User | null;
@@ -47,7 +48,8 @@ export default function useAuth() {
     try {
       const { token, admin } = await loginUser(payload);
       localStorage.setItem("accessToken", token);
-      localStorage.setItem("adminId", String(admin.id));
+      Cookies.set("token", token, { expires: 7, secure: true });
+      localStorage.setItem("adminId", String(admin._id));
       setState({ user: admin, loading: false, error: null });
       router.push("/dashboard");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
