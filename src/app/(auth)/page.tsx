@@ -3,17 +3,19 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import Logo from "@/components/shared/Logo";
-import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-  const router = useRouter();
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+
+  const { login, loading, error } = useAuth();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -35,7 +37,7 @@ export default function LoginPage() {
     return newErrors;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
 
@@ -44,8 +46,7 @@ export default function LoginPage() {
       return;
     }
 
-    
-    router.push("/dashboard");
+    await login({ email: form.email, password: form.password });
   };
 
   return (
@@ -56,7 +57,6 @@ export default function LoginPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-       
         <div>
           <input
             type="email"
@@ -67,13 +67,13 @@ export default function LoginPage() {
             }`}
             value={form.email}
             onChange={onChange}
+            disabled={loading}
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
           )}
         </div>
 
-       
         <div>
           <input
             type="password"
@@ -84,22 +84,28 @@ export default function LoginPage() {
             }`}
             value={form.password}
             onChange={onChange}
+            disabled={loading}
           />
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password}</p>
           )}
         </div>
 
-       
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+
         <button
           type="submit"
-          className="w-full bg-primary text-white py-2 rounded hover:bg-secondary"
+          disabled={loading}
+          className={`w-full py-2 rounded text-white ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-primary hover:bg-secondary"
+          }`}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 
-     
       <div className="text-sm mt-4 flex justify-between">
         <Link href="/forgot-password" className="text-primary hover:underline">
           Forgot Password?
