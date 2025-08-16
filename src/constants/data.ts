@@ -42,27 +42,16 @@ export interface AnalyticsItem {
 }
 
 export const analyticsSummary: AnalyticsItem[] = [
-  {
-    title: "Orders",
-    value: "1,250",
-    icon: MdShoppingCart,
-    color: "text-blue-500",
-  },
-  {
-    title: "Revenue",
-    value: "₦23,400",
-    icon: MdAttachMoney,
-    color: "text-green-500",
-  },
+  
   {
     title: "Menus",
-    value: "85",
+    value: "0",
     icon: MdRestaurantMenu,
     color: "text-purple-500",
   },
   {
     title: "Customers",
-    value: "2,340",
+    value: "0",
     icon: MdPeople,
     color: "text-yellow-500",
   },
@@ -98,20 +87,9 @@ export const mostSoldFoods: FoodSale[] = [
 ];
 
 
-export interface RevenueData {
-  month: string;
-  amount: number;
-}
 
-export const revenueGraphData: RevenueData[] = [
-  { month: "Jan", amount: 3200 },
-  { month: "Feb", amount: 4500 },
-  { month: "Mar", amount: 5300 },
-  { month: "Apr", amount: 6100 },
-  { month: "May", amount: 7000 },
-  { month: "Jun", amount: 6700 },
-  { month: "Jul", amount: 7500 },
-];
+
+
 
 export const categories = ["Appetizers", "Main Course", "Desserts", "Drinks"];
 
@@ -139,7 +117,7 @@ export const mockMenuItems: FoodItem[] = [
     id: 2,
     name: "Burger",
     image: "/images/product1.png",
-    price: 3000,
+    price: 0,
     available: true,
     featured: false,
     category: "Appetizers",

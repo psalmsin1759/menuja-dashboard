@@ -17,7 +17,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile overlay */}
+     
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         className={`fixed z-50 md:static md:translate-x-0 bg-white w-64 h-full p-5 shadow-md transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        {/* Mobile close button */}
+       
         <div className="flex justify-between items-center mb-6 md:hidden">
           <h2 className="text-lg font-semibold">Menu</h2>
           <button onClick={() => setIsOpen(false)}>
@@ -37,7 +37,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           </button>
         </div>
 
-        {/* Navigation Menu */}
+       
         <div className="mb-8">
           <Logo />
         </div>

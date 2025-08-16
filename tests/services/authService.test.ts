@@ -10,7 +10,7 @@ jest.mock("axios", () => ({
 
 jest.mock("@/utils/handleApiError");
 
-import { loginUser, getProfile, logoutUser } from "@/services/authService";
+import { loginUser, getProfile, logoutUser } from "@/services/auth.service";
 import { handleApiError } from "@/utils/handleApiError";
 jest.mock("@/utils/handleApiError");
 

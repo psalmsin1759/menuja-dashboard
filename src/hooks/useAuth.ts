@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { getProfile, loginUser, logoutUser } from "@/services/authService";
+import { getProfile, loginUser, logoutUser } from "@/services/auth.service";
 import type { User, LoginPayload } from "@/types/auth";
 import Cookies from "js-cookie";
 
