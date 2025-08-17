@@ -3,8 +3,10 @@ import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/navigation/Sidebar";
 import { ModalProvider } from "@/contexts/ModalContext";
-import { SelectedCategoryProvider } from "@/contexts/SelectedCategoryContext";
 import React, { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+//import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function ClientLayout({
   children,
@@ -12,6 +14,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [queryClient] = useState(() => new QueryClient());
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
@@ -21,12 +24,16 @@ export default function ClientLayout({
 
         <main className="flex-1 overflow-y-auto p-6 bg-gray-100">
           <ModalProvider>
-            <SelectedCategoryProvider>{children}</SelectedCategoryProvider>
+            <QueryClientProvider client={queryClient}>
+              {children}
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            </QueryClientProvider>
           </ModalProvider>
         </main>
 
         <Footer />
       </div>
+       <ToastContainer />
     </div>
   );
 }
